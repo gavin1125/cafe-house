@@ -5,6 +5,9 @@ import cn.gavin.cafehouse.waiter.model.Coffee;
 import cn.gavin.cafehouse.waiter.model.CoffeeOrder;
 import cn.gavin.cafehouse.waiter.service.CoffeeOrderService;
 import cn.gavin.cafehouse.waiter.service.CoffeeService;
+import io.github.resilience4j.ratelimiter.RateLimiter;
+import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +22,21 @@ public class CoffeeOrderController {
     private CoffeeOrderService orderService;
     @Autowired
     private CoffeeService coffeeService;
+    private RateLimiter rateLimiter;
+
+    public CoffeeOrderController(RateLimiterRegistry rateLimiterRegistry) {
+        rateLimiter = rateLimiterRegistry.rateLimiter("order");
+    }
 
     @GetMapping("/{id}")
     public CoffeeOrder getOrder(@PathVariable("id") Long id) {
-        CoffeeOrder order = orderService.get(id);
-        log.info("Get Order: {}", order);
+        CoffeeOrder order = null;
+        try {
+            order = rateLimiter.executeSupplier(() -> orderService.get(id));
+            log.info("Get Order: {}", order);
+        }catch (RequestNotPermitted e){
+            log.warn("Request Not Permitted! {}", e.getMessage());
+        }
         return order;
     }
 

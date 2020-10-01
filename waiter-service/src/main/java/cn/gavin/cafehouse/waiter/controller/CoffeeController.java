@@ -3,6 +3,7 @@ package cn.gavin.cafehouse.waiter.controller;
 import cn.gavin.cafehouse.waiter.controller.request.NewCoffeeRequest;
 import cn.gavin.cafehouse.waiter.model.Coffee;
 import cn.gavin.cafehouse.waiter.service.CoffeeService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/coffee")
+@RateLimiter(name = "coffee")
 @Slf4j
 public class CoffeeController {
     @Autowired
