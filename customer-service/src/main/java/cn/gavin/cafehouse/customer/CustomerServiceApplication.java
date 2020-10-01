@@ -40,39 +40,6 @@ public class CustomerServiceApplication {
                 .build();
     }
 
-//    @Bean
-//    public HttpComponentsClientHttpRequestFactory requestFactory() {
-//        PoolingHttpClientConnectionManager connectionManager =
-//                new PoolingHttpClientConnectionManager(30, TimeUnit.SECONDS);
-//        connectionManager.setMaxTotal(200);
-//        connectionManager.setDefaultMaxPerRoute(20);
-//
-//        CloseableHttpClient httpClient = HttpClients.custom()
-//                .setConnectionManager(connectionManager)
-//                .evictIdleConnections(30, TimeUnit.SECONDS)
-//                .disableAutomaticRetries()
-//                // 有 Keep-Alive 认里面的值，没有的话永久有效
-//                //.setKeepAliveStrategy(DefaultConnectionKeepAliveStrategy.INSTANCE)
-//                // 换成自定义的
-//                .setKeepAliveStrategy(new CustomConnectionKeepAliveStrategy())
-//                .build();
-//
-//        HttpComponentsClientHttpRequestFactory requestFactory =
-//                new HttpComponentsClientHttpRequestFactory(httpClient);
-//
-//        return requestFactory;
-//    }
-//
-//    @LoadBalanced
-//    @Bean
-//    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-//        return builder
-//                .setConnectTimeout(Duration.ofMillis(1000))
-//                .setReadTimeout(Duration.ofMillis(5000))
-//                .requestFactory(this::requestFactory)
-//                .build();
-//    }
-
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jacksonBuilderCustomizer() {
         return builder -> {

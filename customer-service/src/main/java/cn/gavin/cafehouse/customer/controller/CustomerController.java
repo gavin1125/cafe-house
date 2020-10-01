@@ -5,6 +5,10 @@ import cn.gavin.cafehouse.customer.integration.CoffeeService;
 import cn.gavin.cafehouse.customer.model.Coffee;
 import cn.gavin.cafehouse.customer.model.CoffeeOrder;
 import cn.gavin.cafehouse.customer.model.NewOrderRequest;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
+import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,14 +28,23 @@ public class CustomerController {
     private CoffeeService coffeeService;
     @Autowired
     private CoffeeOrderService coffeeOrderService;
+    private CircuitBreaker circuitBreaker;
+
+    public CustomerController(CircuitBreakerRegistry registry) {
+        circuitBreaker = registry.circuitBreaker("menu");
+    }
 
     @GetMapping("/menu")
     public List<Coffee> readMenu() {
-        List<Coffee> list = coffeeService.getAll();
-        return list == null ? Collections.emptyList() : list;
+        return Try.ofSupplier(
+                CircuitBreaker.decorateSupplier(circuitBreaker,
+                        () -> coffeeService.getAll()))
+                .recover(CallNotPermittedException.class, Collections.emptyList())
+                .get();
     }
 
     @PostMapping("/order")
+    @io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "order")
     public CoffeeOrder createOrder() {
         NewOrderRequest orderRequest = NewOrderRequest.builder()
                 .customer("Li Lei")
