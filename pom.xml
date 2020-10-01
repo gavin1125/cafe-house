@@ -30,6 +30,7 @@
         <jackson-datatype-hibernate5.version>2.9.8</jackson-datatype-hibernate5.version>
         <jackson-dataformat-xml.version>2.9.0</jackson-dataformat-xml.version>
         <httpclient.version>4.5.7</httpclient.version>
+        <docker.image.prefix>cafehouse</docker.image.prefix>
     </properties>
 
     <!--spring 依赖管理-->
@@ -92,4 +93,34 @@
             <artifactId>spring-cloud-starter-consul-discovery</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.10</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
