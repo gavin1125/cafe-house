@@ -8,6 +8,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -16,6 +17,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -60,5 +62,13 @@ public class CustomerServiceApplication {
                 .setReadTimeout(Duration.ofMillis(5000))
                 .requestFactory(this::requestFactory)
                 .build();
+    }
+
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer jacksonBuilderCustomizer() {
+        return builder -> {
+            builder.indentOutput(true);
+            builder.timeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        };
     }
 }
