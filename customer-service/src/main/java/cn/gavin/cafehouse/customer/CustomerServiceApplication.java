@@ -21,9 +21,6 @@ import java.util.concurrent.TimeUnit;
 @EnableFeignClients
 @EnableAspectJAutoProxy
 public class CustomerServiceApplication {
-//    @Autowired
-//    private RestTemplate restTemplate;
-
     public static void main(String[] args) {
         SpringApplication.run(CustomerServiceApplication.class, args);
     }
