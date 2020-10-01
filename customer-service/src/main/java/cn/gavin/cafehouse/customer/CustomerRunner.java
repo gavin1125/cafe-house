@@ -30,9 +30,9 @@ public class CustomerRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         showServiceInstances();
-        readMenu();
-        Long id = orderCoffee();
-        queryOrder(id);
+//        readMenu();
+//        Long id = orderCoffee();
+//        queryOrder(id);
     }
 
     private void showServiceInstances() {
