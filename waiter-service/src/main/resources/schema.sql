@@ -34,3 +34,10 @@ create table t_order_coffee (
 
 CREATE SEQUENCE s_coffee_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
 CREATE SEQUENCE s_order_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+
+
+insert into t_coffee (id,name, price, create_time, update_time) values (nextval('s_coffee_seq'),'espresso', 2000, now(), now());
+insert into t_coffee (id,name, price, create_time, update_time) values (nextval('s_coffee_seq'),'latte', 2500, now(), now());
+insert into t_coffee (id,name, price, create_time, update_time) values (nextval('s_coffee_seq'),'capuccino', 2500, now(), now());
+insert into t_coffee (id,name, price, create_time, update_time) values (nextval('s_coffee_seq'),'mocha', 3000, now(), now());
+insert into t_coffee (id,name, price, create_time, update_time) values (nextval('s_coffee_seq'),'macchiato', 3000, now(), now());
