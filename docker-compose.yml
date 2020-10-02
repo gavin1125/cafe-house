@@ -52,7 +52,7 @@ services:
       - RABBIT_PASSWORD=spring
 
   waiter-service:
-    image: cafehouse/waiter-service:0.0.1-SNAPSHOT
+    image: cafehouse/waiter-service:1.0-SNAPSHOT
     depends_on:
       - mysql
       - consul
@@ -69,7 +69,7 @@ services:
       - 8080:8080
 
   barista-service:
-    image: cafehouse/barista-service:0.0.1-SNAPSHOT
+    image: cafehouse/barista-service:1.0-SNAPSHOT
     depends_on:
       - mysql
       - consul
@@ -82,7 +82,7 @@ services:
       - zipkin
 
   customer-service-8090:
-    image: cafehouse/customer-service:0.0.1-SNAPSHOT
+    image: cafehouse/customer-service:1.0-SNAPSHOT
     depends_on:
       - waiter-service
     links:
