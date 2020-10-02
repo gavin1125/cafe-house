@@ -14,7 +14,6 @@ import java.util.List;
 
 @Slf4j
 @Service
-@CacheConfig(cacheNames = "CoffeeCache")
 public class CoffeeService {
     @Autowired
     private CoffeeRepository coffeeRepository;
@@ -23,7 +22,6 @@ public class CoffeeService {
         return coffeeRepository.save(Coffee.builder().name(name).price(price).build());
     }
 
-    @Cacheable
     public List<Coffee> getAllCoffee() {
         return coffeeRepository.findAll(Sort.by("id"));
     }

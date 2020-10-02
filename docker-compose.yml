@@ -10,11 +10,6 @@ services:
       - POSTGRES_USER=springbucks
       - POSTGRES_PASSWORD=springbucks
 
-  redis:
-    image: redis
-    expose:
-      - 6379
-
   consul:
     image: consul
     expose:
@@ -60,13 +55,11 @@ services:
       - consul
       - rabbitmq
       - zipkin
-      - redis
     links:
       - postgres
       - consul
       - rabbitmq
       - zipkin
-      - redis
     expose:
       - 8080
     ports:
@@ -100,19 +93,3 @@ services:
       - 8090:8090
     environment:
       - SERVER_PORT=8090
-
-  customer-service-9090:
-    image: chenlehua/customer-service:1.0-SNAPSHOT
-    depends_on:
-      - waiter-service
-    links:
-      - consul
-      - rabbitmq
-      - zipkin
-      - waiter-service
-    expose:
-      - 9090
-    ports:
-      - 9090:9090
-    environment:
-      - SERVER_PORT=9090

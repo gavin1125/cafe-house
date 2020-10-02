@@ -22,7 +22,6 @@ import java.util.TimeZone;
 @Slf4j
 @EnableTransactionManagement
 @SpringBootApplication
-@EnableCaching
 @EnableJpaRepositories
 @EnableDiscoveryClient
 @EnableBinding({ Barista.class, Customer.class })
