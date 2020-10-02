@@ -31,7 +31,7 @@
         <jackson-datatype-hibernate5.version>2.9.8</jackson-datatype-hibernate5.version>
         <jackson-dataformat-xml.version>2.9.0</jackson-dataformat-xml.version>
         <httpclient.version>4.5.7</httpclient.version>
-        <docker.image.prefix>chenlehua</docker.image.prefix>
+        <docker.image.prefix>cafehouse</docker.image.prefix>
     </properties>
 
     <!--spring 依赖管理-->
