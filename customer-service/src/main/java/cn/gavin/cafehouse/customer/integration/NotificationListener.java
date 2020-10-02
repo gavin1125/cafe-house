@@ -1,8 +1,5 @@
 package cn.gavin.cafehouse.customer.integration;
 
-import cn.gavin.cafehouse.customer.model.CoffeeOrder;
-import cn.gavin.cafehouse.customer.model.OrderState;
-import cn.gavin.cafehouse.customer.model.OrderStateRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

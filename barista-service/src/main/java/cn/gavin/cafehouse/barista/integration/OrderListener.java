@@ -1,7 +1,5 @@
 package cn.gavin.cafehouse.barista.integration;
 
-import cn.gavin.cafehouse.barista.model.CoffeeOrder;
-import cn.gavin.cafehouse.barista.model.OrderState;
 import cn.gavin.cafehouse.barista.repository.CoffeeOrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

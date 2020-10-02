@@ -12,15 +12,11 @@ import java.util.List;
 @Table(name = "T_ORDER")
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 @Builder
-public class CoffeeOrder extends BaseEntity implements Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "orderSeq")
-    @SequenceGenerator(name = "orderSeq",sequenceName = "s_order_seq",allocationSize = 1)
-    private Long id;
+public class CoffeeOrder extends BaseEntity implements Serializable {
     private String customer;
     @ManyToMany
     @JoinTable(name = "T_ORDER_COFFEE")
@@ -30,7 +26,7 @@ public class CoffeeOrder extends BaseEntity implements Serializable{
     @Column(nullable = false)
     private OrderState state;
     private Integer discount;
-    @Type(type = "org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmount",
+    @Type(type = "org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyMinorAmount",
             parameters = {@org.hibernate.annotations.Parameter(name = "currencyCode", value = "CNY")})
     private Money total;
     private String waiter;

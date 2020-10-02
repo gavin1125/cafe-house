@@ -16,8 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class CoffeeOrder {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orderSeq")
-    @SequenceGenerator(name = "orderSeq", sequenceName = "s_order_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String customer;
     private String waiter;
@@ -25,9 +24,9 @@ public class CoffeeOrder {
     @Enumerated
     @Column(nullable = false)
     private OrderState state;
+    @Column(updatable = false)
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
     private Date updateTime;
-
 }

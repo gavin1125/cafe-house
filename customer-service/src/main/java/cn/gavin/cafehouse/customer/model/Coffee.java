@@ -9,9 +9,8 @@ import org.joda.money.Money;
 import java.io.Serializable;
 import java.util.Date;
 
-
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Coffee implements Serializable {
