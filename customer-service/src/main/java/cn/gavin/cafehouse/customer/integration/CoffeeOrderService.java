@@ -1,5 +1,8 @@
 package cn.gavin.cafehouse.customer.integration;
 
+import cn.gavin.cafehouse.customer.model.CoffeeOrder;
+import cn.gavin.cafehouse.customer.model.NewOrderRequest;
+import cn.gavin.cafehouse.customer.model.OrderStateRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

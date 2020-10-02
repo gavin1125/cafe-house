@@ -1,5 +1,6 @@
 package cn.gavin.cafehouse.customer.integration;
 
+import cn.gavin.cafehouse.customer.model.Coffee;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

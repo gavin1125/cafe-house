@@ -1,5 +1,6 @@
 package cn.gavin.cafehouse.waiter.integration;
 
+import cn.gavin.cafehouse.waiter.model.CoffeeOrder;
 import cn.gavin.cafehouse.waiter.service.CoffeeOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package cn.gavin.cafehouse.waiter.service;
 
+import cn.gavin.cafehouse.waiter.model.Coffee;
 import cn.gavin.cafehouse.waiter.repository.CoffeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;

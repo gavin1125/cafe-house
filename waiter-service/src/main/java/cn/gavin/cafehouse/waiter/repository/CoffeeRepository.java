@@ -1,5 +1,6 @@
 package cn.gavin.cafehouse.waiter.repository;
 
+import cn.gavin.cafehouse.waiter.model.Coffee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

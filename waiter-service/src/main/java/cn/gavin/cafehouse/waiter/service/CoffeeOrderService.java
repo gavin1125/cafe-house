@@ -1,6 +1,9 @@
 package cn.gavin.cafehouse.waiter.service;
 
 import cn.gavin.cafehouse.waiter.integration.Barista;
+import cn.gavin.cafehouse.waiter.model.Coffee;
+import cn.gavin.cafehouse.waiter.model.CoffeeOrder;
+import cn.gavin.cafehouse.waiter.model.OrderState;
 import cn.gavin.cafehouse.waiter.repository.CoffeeOrderRepository;
 import cn.gavin.cafehouse.waiter.support.OrderProperties;
 import lombok.extern.slf4j.Slf4j;
