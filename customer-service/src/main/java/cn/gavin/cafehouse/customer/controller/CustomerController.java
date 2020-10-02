@@ -2,9 +2,7 @@ package cn.gavin.cafehouse.customer.controller;
 
 import cn.gavin.cafehouse.customer.integration.CoffeeOrderService;
 import cn.gavin.cafehouse.customer.integration.CoffeeService;
-import cn.gavin.cafehouse.customer.model.Coffee;
-import cn.gavin.cafehouse.customer.model.CoffeeOrder;
-import cn.gavin.cafehouse.customer.model.NewOrderRequest;
+import cn.gavin.cafehouse.customer.model.*;
 import io.github.resilience4j.bulkhead.Bulkhead;
 import io.github.resilience4j.bulkhead.BulkheadFullException;
 import io.github.resilience4j.bulkhead.BulkheadRegistry;
@@ -14,6 +12,7 @@ import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +30,8 @@ public class CustomerController {
     private CoffeeService coffeeService;
     @Autowired
     private CoffeeOrderService coffeeOrderService;
+    @Value("${customer.name}")
+    private String customer;
     private CircuitBreaker circuitBreaker;
     private Bulkhead bulkhead;
 
@@ -53,13 +54,16 @@ public class CustomerController {
     @PostMapping("/order")
     @io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "order")
     @io.github.resilience4j.bulkhead.annotation.Bulkhead(name = "order")
-    public CoffeeOrder createOrder() {
+    public CoffeeOrder createAndPayOrder() {
         NewOrderRequest orderRequest = NewOrderRequest.builder()
-                .customer("Li Lei")
+                .customer(customer)
                 .items(Arrays.asList("capuccino"))
                 .build();
         CoffeeOrder order = coffeeOrderService.create(orderRequest);
-        log.info("Order ID: {}", order != null ? order.getId() : "-");
+        log.info("Create order: {}", order != null ? order.getId() : "-");
+        order = coffeeOrderService.updateState(order.getId(),
+                OrderStateRequest.builder().state(OrderState.PAID).build());
+        log.info("Order is PAID: {}", order);
         return order;
     }
 }

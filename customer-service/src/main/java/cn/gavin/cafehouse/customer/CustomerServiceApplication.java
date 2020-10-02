@@ -1,5 +1,6 @@
 package cn.gavin.cafehouse.customer;
 
+import cn.gavin.cafehouse.customer.integration.Waiter;
 import cn.gavin.cafehouse.customer.support.CustomConnectionKeepAliveStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableAspectJAutoProxy
+@EnableBinding(Waiter.class)
 public class CustomerServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(CustomerServiceApplication.class, args);

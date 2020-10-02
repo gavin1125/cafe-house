@@ -3,6 +3,7 @@ package cn.gavin.cafehouse.customer.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.money.Money;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,10 @@ public class CoffeeOrder {
     private String customer;
     private List<Coffee> items;
     private OrderState state;
+    private String waiter;
+    private String barista;
+    private Integer discount;
+    private Money total;
     private Date createTime;
     private Date updateTime;
 }

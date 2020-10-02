@@ -26,6 +26,7 @@ public class CoffeeOrder extends BaseEntity implements Serializable{
     @JoinTable(name = "T_ORDER_COFFEE")
     @OrderBy("id")
     private List<Coffee> items;
+    @Enumerated
     @Column(nullable = false)
     private OrderState state;
     private Integer discount;
@@ -33,4 +34,5 @@ public class CoffeeOrder extends BaseEntity implements Serializable{
             parameters = {@org.hibernate.annotations.Parameter(name = "currencyCode", value = "CNY")})
     private Money total;
     private String waiter;
+    private String barista;
 }

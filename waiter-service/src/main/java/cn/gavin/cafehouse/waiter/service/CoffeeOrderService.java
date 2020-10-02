@@ -1,5 +1,6 @@
 package cn.gavin.cafehouse.waiter.service;
 
+import cn.gavin.cafehouse.waiter.integration.Barista;
 import cn.gavin.cafehouse.waiter.model.Coffee;
 import cn.gavin.cafehouse.waiter.model.CoffeeOrder;
 import cn.gavin.cafehouse.waiter.model.OrderState;
@@ -10,6 +11,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,6 +32,8 @@ public class CoffeeOrderService {
     @Autowired
     private OrderProperties orderProperties;
     private String waiterId = UUID.randomUUID().toString();
+    @Autowired
+    private Barista barista;
 
     public CoffeeOrder createOrder(String customer, Coffee...coffee) {
         CoffeeOrder order = CoffeeOrder.builder()
@@ -50,6 +54,10 @@ public class CoffeeOrderService {
     }
 
     public boolean updateState(CoffeeOrder order, OrderState state) {
+        if (order == null) {
+            log.warn("Can not find order.");
+            return false;
+        }
         if (state.compareTo(order.getState()) <= 0) {
             log.warn("Wrong State order: {}, {}", state, order.getState());
             return false;
@@ -57,6 +65,11 @@ public class CoffeeOrderService {
         order.setState(state);
         orderRepository.save(order);
         log.info("Updated Order: {}", order);
+        if (state == OrderState.PAID) {
+            // 有返回值，如果要关注发送结果，则判断返回值
+            // 一般消息体不会这么简单
+            barista.newOrders().send(MessageBuilder.withPayload(order.getId()).build());
+        }
         return true;
     }
 

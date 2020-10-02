@@ -1,6 +1,7 @@
 package cn.gavin.cafehouse.waiter.controller;
 
 import cn.gavin.cafehouse.waiter.controller.request.NewOrderRequest;
+import cn.gavin.cafehouse.waiter.controller.request.OrderStateRequest;
 import cn.gavin.cafehouse.waiter.model.Coffee;
 import cn.gavin.cafehouse.waiter.model.CoffeeOrder;
 import cn.gavin.cafehouse.waiter.service.CoffeeOrderService;
@@ -48,5 +49,14 @@ public class CoffeeOrderController {
         Coffee[] coffeeList = coffeeService.getCoffeeByName(newOrder.getItems())
                 .toArray(new Coffee[]{});
         return orderService.createOrder(newOrder.getCustomer(), coffeeList);
+    }
+
+    @PutMapping("/{id}")
+    public CoffeeOrder updateState(@PathVariable("id") Long id,
+                                   @RequestBody OrderStateRequest orderState) {
+        log.info("Update order state: {}", orderState);
+        CoffeeOrder order = orderService.get(id);
+        orderService.updateState(order, orderState.getState());
+        return order;
     }
 }
