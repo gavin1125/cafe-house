@@ -56,13 +56,13 @@ services:
   waiter-service:
     image: springbucks/waiter-service:0.0.1-SNAPSHOT
     depends_on:
-      - mysql
+      - postgres
       - consul
       - rabbitmq
       - zipkin
       - redis
     links:
-      - mysql
+      - postgres
       - consul
       - rabbitmq
       - zipkin
@@ -75,12 +75,12 @@ services:
   barista-service:
     image: springbucks/barista-service:0.0.1-SNAPSHOT
     depends_on:
-      - mysql
+      - postgres
       - consul
       - rabbitmq
       - zipkin
     links:
-      - mysql
+      - postgres
       - consul
       - rabbitmq
       - zipkin
