@@ -54,7 +54,7 @@ services:
       - RABBIT_PASSWORD=spring
 
   waiter-service:
-    image: cafehouse/waiter-service:0.0.1-SNAPSHOT
+    image: chenlehua/waiter-service:1.0-SNAPSHOT
     depends_on:
       - postgres
       - consul
@@ -73,7 +73,7 @@ services:
       - 8080:8080
 
   barista-service:
-    image: cafehouse/barista-service:0.0.1-SNAPSHOT
+    image: chenlehua/barista-service:1.0-SNAPSHOT
     depends_on:
       - postgres
       - consul
@@ -86,7 +86,7 @@ services:
       - zipkin
 
   customer-service-8090:
-    image: cafehouse/customer-service:0.0.1-SNAPSHOT
+    image: chenlehua/customer-service:1.0-SNAPSHOT
     depends_on:
       - waiter-service
     links:
@@ -102,7 +102,7 @@ services:
       - SERVER_PORT=8090
 
   customer-service-9090:
-    image: cafehouse/customer-service:0.0.1-SNAPSHOT
+    image: chenlehua/customer-service:1.0-SNAPSHOT
     depends_on:
       - waiter-service
     links:
